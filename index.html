@@ -354,12 +354,9 @@ footer{padding:24px 0;border-top:1px solid var(--line);color:#888;font-size:.72r
   $$('a[href^="#"]').forEach(link => {
     link.addEventListener('click', event => {
       const targetId = link.getAttribute('href');
-      if (!targetId || targetId === '#') {
-        event.preventDefault();
-        const label = link.dataset.placeholder || 'rețeaua socială';
-        alert('Înlocuiește linkul demonstrativ pentru ' + label + ' cu profilul tău real.');
-        return;
-      }
+      if (!targetId || targetId === '#') return;
+const target = $(targetId);
+if (!target) return;
       const target = $(targetId);
       if (!target) return;
       event.preventDefault();
