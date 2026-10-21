@@ -1,509 +1,1677 @@
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080808">
-<meta name="description" content="Portofoliul lui Ionuț Tunea — video editor, cameraman și creator de conținut.">
-<title>Ionuț Tunea — Video Editor, Videograf & Creator</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#080808;--panel:#111;--panel2:#171717;--text:#f5f5f0;--muted:#a2a29c;--yellow:#ffe500;--line:rgba(255,255,255,.14);--ease:cubic-bezier(.22,1,.36,1);--mono:"DM Mono",monospace;--sans:"Manrope",sans-serif}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;line-height:1.6}
-body.locked{overflow:hidden}
-a{color:inherit;text-decoration:none}
-button{font:inherit}
-button,a{-webkit-tap-highlight-color:transparent}
-::selection{background:var(--yellow);color:#000}
-.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%);opacity:0}
-.cursor-dot{width:6px;height:6px;background:var(--yellow)}
-.cursor-ring{width:34px;height:34px;border:1px solid rgba(255,229,0,.75);transition:width .25s,height .25s,background .25s}
-body.has-pointer .cursor-dot,body.has-pointer .cursor-ring{opacity:1}
-body.cursor-hover .cursor-ring{width:58px;height:58px;background:rgba(255,229,0,.08)}
-a,button,.project-card{cursor:pointer}
-.noise{position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
-.transition-curtain{position:fixed;inset:0;z-index:900;background:var(--yellow);transform:scaleY(0);transform-origin:bottom;pointer-events:none}
-.transition-curtain.go{animation:curtain .85s var(--ease) forwards}
-@keyframes curtain{0%{transform:scaleY(0);transform-origin:bottom}42%{transform:scaleY(1);transform-origin:bottom}58%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(0);transform-origin:top}}
-.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--yellow);z-index:1001;box-shadow:0 0 16px rgba(255,229,0,.5)}
-.container{width:min(1160px,90%);margin:auto}
-.mono,.eyebrow,.section-index,.meta{font-family:var(--mono);text-transform:uppercase;letter-spacing:.13em;font-size:.72rem}
-.eyebrow{color:var(--yellow);margin-bottom:16px}
-.accent{color:var(--yellow)}
-header{height:78px;position:fixed;inset:0 0 auto;z-index:500;background:rgba(8,8,8,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{font-weight:800;font-size:1.15rem;letter-spacing:-.07em;white-space:nowrap}
-.logo span{color:var(--yellow)}
-.nav-links{display:flex;align-items:center;gap:clamp(14px,2.6vw,32px);list-style:none}
-.nav-links a{font-size:.8rem;color:#c9c9c3;position:relative;padding:9px 0;transition:color .25s}
-.nav-links a:after{content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--yellow);transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
-.nav-links a:hover,.nav-links a.active{color:var(--yellow)}
-.nav-links a:hover:after,.nav-links a.active:after{transform:scaleX(1);transform-origin:left}
-.nav-cta{border:1px solid var(--yellow);border-radius:999px;padding:10px 16px;color:var(--yellow);font-size:.78rem;font-weight:800;transition:background .25s,color .25s}
-.nav-cta:hover{background:var(--yellow);color:#000}
-.menu-toggle{display:none;background:none;border:1px solid var(--line);color:white;border-radius:9px;padding:8px 11px}
-section{position:relative;scroll-margin-top:78px}
-.hero{min-height:100svh;padding:145px 0 70px;display:flex;align-items:center;overflow:hidden}
-.hero:before{content:"";position:absolute;width:55vw;height:55vw;right:-16vw;top:4%;background:radial-gradient(circle,rgba(255,229,0,.09),transparent 66%);pointer-events:none}
-.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:36px}
-.hero-copy{position:relative;z-index:2}
-.kicker{display:flex;align-items:center;gap:12px;margin-bottom:28px;color:#d1d1ca}
-.kicker:before{content:"";width:34px;height:1px;background:var(--yellow)}
-.hero h1{font-size:clamp(3.5rem,8.2vw,7.8rem);line-height:.91;letter-spacing:-.085em;font-weight:800;margin-bottom:28px}
-.hero h1 .line{display:block;overflow:hidden;padding-bottom:.08em}
-.hero h1 .line span{display:block;animation:heroText 1s var(--ease) both}
-.hero h1 .line:nth-child(2) span{animation-delay:.12s}
-.hero h1 .line:nth-child(3) span{animation-delay:.24s}
-@keyframes heroText{from{transform:translateY(115%);opacity:0}to{transform:translateY(0);opacity:1}}
-.hero h1 .italic{font-style:italic;color:var(--yellow);font-weight:600}
-.hero-desc{max-width:480px;color:var(--muted);font-size:1rem;margin-bottom:30px}
-.actions{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:13px 20px;border:1px solid var(--line);font-size:.82rem;font-weight:800;transition:transform .3s var(--ease),background .3s,color .3s,border-color .3s}
-.btn:hover{transform:translateY(-4px)}
-.btn-primary{background:var(--yellow);border-color:var(--yellow);color:#050505}
-.btn-primary:hover{background:#fff45b}
-.btn-ghost:hover{border-color:var(--yellow);color:var(--yellow)}
-.arrow{display:inline-block;transition:transform .25s}
-.btn:hover .arrow{transform:translate(3px,-2px)}
-.social-row{display:flex;gap:16px;margin-top:32px;color:#aaa;font-family:var(--mono);font-size:.72rem}
-.social-row a:hover{color:var(--yellow)}
-.hero-art{min-height:510px;position:relative;isolation:isolate}
-.hero-photo{position:absolute;inset:4% 0 5% 8%;overflow:hidden;border:1px solid #3a3824;background:linear-gradient(145deg,#26251a,#101010 60%,#292400)}
-.hero-photo img{width:100%;height:100%;object-fit:cover;opacity:.72;filter:grayscale(.65) contrast(1.12);transition:transform 1.2s var(--ease),filter .8s}
-.hero-art:hover .hero-photo img{transform:scale(1.055);filter:grayscale(.15) contrast(1.1)}
-.hero-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55),transparent 80%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 60%)}
-.photo-caption{position:absolute;left:24px;bottom:24px;z-index:2;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase}
-.photo-caption strong{display:block;color:var(--yellow);font-size:.9rem;font-weight:500;margin-top:7px}
-.vertical-label{position:absolute;left:0;top:17%;writing-mode:vertical-rl;transform:rotate(180deg);color:var(--yellow);font: .65rem var(--mono);letter-spacing:.18em}
-.hero-stamp{position:absolute;right:-10px;top:0;width:108px;height:108px;border-radius:50%;border:1px solid var(--yellow);display:grid;place-items:center;text-align:center;font: .65rem var(--mono);color:var(--yellow);background:#080808;animation:spin 18s linear infinite}
-.hero-stamp span{display:block;animation:spin 18s linear infinite reverse}
-@keyframes spin{to{transform:rotate(360deg)}}
-.hero-number{position:absolute;right:0;bottom:0;font:clamp(5rem,10vw,9rem) var(--sans);font-weight:800;letter-spacing:-.1em;color:rgba(255,229,0,.14);line-height:1}
-.scroll-cue{position:absolute;bottom:25px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;color:#aaa;font: .65rem var(--mono);letter-spacing:.1em;text-transform:uppercase}
-.scroll-cue i{display:block;width:1px;height:28px;background:var(--yellow);animation:scrollLine 1.4s ease-in-out infinite}
-@keyframes scrollLine{0%,100%{transform:scaleY(.45);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
-.stats-strip{border-block:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr)}
-.stat{padding:26px 18px;display:flex;align-items:center;justify-content:center;gap:14px}
-.stat+.stat{border-left:1px solid var(--line)}
-.stat strong{font-size:clamp(1.5rem,3vw,2.35rem);letter-spacing:-.06em}
-.stat span{display:block;color:var(--muted);font-size:.73rem;max-width:100px;line-height:1.3}
-.section-pad{padding:120px 0}
-.section-heading{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:48px}
-.section-heading h2{font-size:clamp(2.7rem,6vw,5.5rem);letter-spacing:-.085em;line-height:.98}
-.section-heading p{max-width:340px;color:var(--muted);font-size:.9rem}
-.section-index{color:var(--yellow);margin-bottom:18px}
-.story{overflow:hidden}
-.story-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:9%;align-items:start}
-.story-visual{min-height:560px;position:relative;background:var(--panel);overflow:hidden;border:1px solid var(--line)}
-.story-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(.7) brightness(.7);transition:transform 1s var(--ease),filter .7s}
-.story-visual:hover img{transform:scale(1.04);filter:grayscale(.1) brightness(.8)}
-.story-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#080808 0%,transparent 60%)}
-.story-visual .visual-text{position:absolute;z-index:2;bottom:28px;left:28px;right:28px}
-.visual-text .big-quote{font-size:clamp(2rem,4vw,3.6rem);font-weight:800;line-height:1;letter-spacing:-.07em}
-.visual-text small{display:block;color:var(--yellow);font: .68rem var(--mono);margin-top:18px;text-transform:uppercase;letter-spacing:.15em}
-.story-copy{padding-top:12px}
-.story-copy p{color:#b9b9b2;margin-bottom:22px;font-size:1rem}
-.story-copy p strong{color:#fff}
-.story-copy blockquote{margin:32px 0;padding:18px 22px;border-left:3px solid var(--yellow);background:linear-gradient(90deg,rgba(255,229,0,.08),transparent);font-size:1.2rem;font-weight:700}
-.story-timeline{margin-top:35px;border-top:1px solid var(--line)}
-.timeline-item{display:grid;grid-template-columns:80px 1fr;gap:18px;padding:19px 0;border-bottom:1px solid var(--line)}
-.timeline-item .year{font: .75rem var(--mono);color:var(--yellow)}
-.timeline-item h3{font-size:.95rem;margin-bottom:3px}
-.timeline-item p{font-size:.82rem;margin:0;color:var(--muted)}
-.services{background:#0d0d0d;border-block:1px solid var(--line)}
-.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.service{padding:25px 22px 27px;border:1px solid var(--line);background:linear-gradient(145deg,#151515,#0b0b0b);min-height:240px;position:relative;overflow:hidden;transition:transform .4s var(--ease),border-color .3s}
-.service:after{content:"";position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--yellow);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
-.service:hover{transform:translateY(-7px);border-color:rgba(255,229,0,.6)}
-.service:hover:after{transform:scaleX(1)}
-.service-icon{width:45px;height:45px;border:1px solid rgba(255,229,0,.45);display:grid;place-items:center;color:var(--yellow);font-size:1.3rem;margin-bottom:28px}
-.service .num{position:absolute;right:18px;top:18px;color:#555;font: .68rem var(--mono)}
-.service h3{font-size:1rem;margin-bottom:10px}
-.service p{font-size:.82rem;color:var(--muted)}
-.portfolio-top{display:flex;justify-content:space-between;align-items:end;gap:24px}
-.filters{display:flex;gap:8px;flex-wrap:wrap}
-.filter-btn{border:1px solid var(--line);background:transparent;color:#ccc;border-radius:999px;padding:8px 13px;font-size:.73rem;transition:all .25s}
-.filter-btn:hover,.filter-btn.active{background:var(--yellow);border-color:var(--yellow);color:#000}
-.portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
-.project-card{min-width:0;background:var(--panel);border:1px solid var(--line);overflow:hidden;transition:transform .45s var(--ease),border-color .3s,opacity .3s}
-.project-card:hover{transform:translateY(-6px);border-color:rgba(255,229,0,.55)}
-.project-card.hidden{display:none}
-.project-image{height:230px;position:relative;overflow:hidden;background:#1a1a1a}
-.project-image img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(.78);transition:transform .8s var(--ease),filter .5s}
-.project-card:hover .project-image img{transform:scale(1.08);filter:saturate(1.05) brightness(.95)}
-.project-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),transparent 55%)}
-.project-category{position:absolute;z-index:2;top:13px;left:13px;background:var(--yellow);color:#000;font: .62rem var(--mono);text-transform:uppercase;padding:6px 8px}
-.project-play{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,229,0,.8);display:grid;place-items:center;background:rgba(0,0,0,.45);color:var(--yellow);transition:background .25s,transform .3s}
-.project-card:hover .project-play{background:var(--yellow);color:#000;transform:translate(-50%,-50%) scale(1.1)}
-.project-info{padding:18px}
-.project-info h3{font-size:1rem;margin-bottom:5px}
-.project-info p{font-size:.78rem;color:var(--muted)}
-.project-foot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font: .65rem var(--mono);color:#888;text-transform:uppercase}
-.project-foot span:last-child{color:var(--yellow)}
-.results{background:var(--yellow);color:#050505}
-.results .eyebrow,.results .section-index{color:#222}
-.results .section-heading p{color:#393900}
-.results-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(0,0,0,.25);border-bottom:1px solid rgba(0,0,0,.25)}
-.result{padding:30px 22px}
-.result+.result{border-left:1px solid rgba(0,0,0,.25)}
-.result strong{font-size:clamp(2rem,4vw,3.8rem);letter-spacing:-.08em;line-height:1.1;display:block}
-.result span{font-size:.8rem;font-weight:700;display:block;margin-top:9px}
-.results-note{margin-top:26px;font-size:.85rem;max-width:600px}
-.contact{padding:110px 0}
-.contact-box{border:1px solid var(--line);padding:clamp(28px,6vw,70px);position:relative;overflow:hidden;background:radial-gradient(circle at 95% 0%,rgba(255,229,0,.1),transparent 35%),#0e0e0e}
-.contact-box:after{content:"LET'S MAKE\nSOMETHING";white-space:pre;position:absolute;right:2%;bottom:-.15em;font-size:clamp(3rem,10vw,9rem);font-weight:800;letter-spacing:-.1em;line-height:.85;color:rgba(255,229,0,.045);pointer-events:none}
-.contact-inner{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:end;gap:35px}
-.contact h2{font-size:clamp(3rem,7vw,6.5rem);line-height:.92;letter-spacing:-.09em;max-width:700px}
-.contact p{color:var(--muted);max-width:490px;margin:22px 0 28px}
-.contact-links{display:flex;flex-direction:column;gap:12px;min-width:220px}
-.contact-links a{padding:12px 0;border-bottom:1px solid var(--line);font-size:.85rem;display:flex;justify-content:space-between;gap:15px}
-.contact-links a span:last-child{color:var(--yellow);transition:transform .25s}
-.contact-links a:hover span:last-child{transform:translate(4px,-4px)}
-footer{padding:24px 0;border-top:1px solid var(--line);color:#888;font-size:.72rem}
-.footer-inner{display:flex;justify-content:space-between;gap:18px;align-items:center}
-.footer-inner strong{color:#eee}
-.back-top{color:var(--yellow)}
-.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-left{opacity:0;transform:translateX(-35px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.reveal-left.visible{opacity:1;transform:translateX(0)}
-.reveal-right{opacity:0;transform:translateX(35px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.reveal-right.visible{opacity:1;transform:translateX(0)}
-.delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}
-.modal{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.88);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:22px}
-.modal.open{display:flex;animation:modalFade .25s ease}
-@keyframes modalFade{from{opacity:0}to{opacity:1}}
-.modal-box{width:min(850px,100%);background:#101010;border:1px solid rgba(255,229,0,.45);position:relative;animation:modalUp .4s var(--ease)}
-@keyframes modalUp{from{transform:translateY(22px) scale(.98)}to{transform:translateY(0) scale(1)}}
-.modal-media{aspect-ratio:16/9;background:#1b1b1b;position:relative;overflow:hidden}
-.modal-media img{width:100%;height:100%;object-fit:cover;filter:brightness(.75)}
-.modal-media:after{content:"PREVIEW / ADAUGĂ LINKUL VIDEO";position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.2);font: .75rem var(--mono);letter-spacing:.12em}
-.modal-content{padding:25px}
-.modal-content h3{font-size:1.6rem;margin-bottom:7px}
-.modal-content p{color:var(--muted);font-size:.9rem}
-.modal-close{position:absolute;right:12px;top:12px;z-index:3;width:40px;height:40px;border:1px solid var(--line);background:#080808;color:white;font-size:1.4rem}
-@media(pointer:fine){body{cursor:none}a,button,.project-card{cursor:none}}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr .85fr;gap:20px}.hero-art{min-height:430px}.services-grid{grid-template-columns:repeat(2,1fr)}.portfolio-grid{grid-template-columns:repeat(2,1fr)}.story-grid{gap:5%}.story-visual{min-height:500px}.nav-links{gap:14px}.nav-links a{font-size:.74rem}}
-@media(max-width:700px){header{height:70px}.menu-toggle{display:block}.nav-cta{display:none}.nav-links{display:none;position:absolute;top:69px;left:0;right:0;background:rgba(8,8,8,.98);padding:20px 5%;border-bottom:1px solid var(--line);align-items:stretch;flex-direction:column;gap:7px}.nav-links.open{display:flex}.nav-links a{display:block;padding:12px 0;font-size:.95rem}.hero{padding:125px 0 80px;min-height:auto}.hero-grid{grid-template-columns:1fr}.hero h1{font-size:clamp(3.5rem,15vw,6.4rem)}.hero-art{min-height:390px;margin:12px 0 0 10px}.hero-photo{inset:3% 0 4% 6%}.hero-stamp{right:0;width:85px;height:85px}.scroll-cue{display:none}.section-pad{padding:85px 0}.section-heading,.portfolio-top{align-items:flex-start;flex-direction:column}.section-heading{margin-bottom:32px}.story-grid{grid-template-columns:1fr;gap:30px}.story-visual{min-height:440px}.story-copy{padding:0}.stats-strip{grid-template-columns:1fr}.stat{justify-content:flex-start;padding:20px 5%}.stat+.stat{border-left:0;border-top:1px solid var(--line)}.stat span{max-width:none}.portfolio-grid{grid-template-columns:1fr}.project-image{height:250px}.results-grid{grid-template-columns:repeat(2,1fr)}.result:nth-child(3){border-left:0;border-top:1px solid rgba(0,0,0,.25)}.result:nth-child(4){border-top:1px solid rgba(0,0,0,.25)}.contact-inner{align-items:flex-start;flex-direction:column}.contact-links{width:100%}.footer-inner{align-items:flex-start;flex-direction:column}.cursor-dot,.cursor-ring{display:none}}
-@media(max-width:420px){.container{width:88%}.hero h1{font-size:3.35rem}.actions .btn{width:100%}.services-grid{grid-template-columns:1fr}.service{min-height:200px}.story-visual{min-height:360px}.result{padding:23px 15px}.result strong{font-size:2rem}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal,.reveal-left,.reveal-right{opacity:1;transform:none}}
-</style>
-</head>
-<body>
-<div class="noise"></div><div class="progress" id="progress"></div><div class="transition-curtain" id="curtain"></div>
-<div class="cursor-dot" id="cursorDot"></div><div class="cursor-ring" id="cursorRing"></div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="Ionuț Tunea — videograf. Povestea mea, proiectele mele și universul meu creativ.">
+  <title>Ionuț Tunea® — Beyond The Frame</title>
 
-<header>
-  <nav class="container">
-    <a class="logo" href="#home" aria-label="Ionuț Tunea — Acasă">IONUȚ <span>TUNEA.</span></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a class="active" href="#home">Acasă</a></li><li><a href="#poveste">Povestea mea</a></li><li><a href="#servicii">Servicii</a></li><li><a href="#portofoliu">Portofoliu</a></li><li><a href="#rezultate">Rezultate</a></li><li><a href="#contact">Contact</a></li>
-    </ul>
-    <a class="nav-cta" href="#contact">Hai să colaborăm <span class="arrow">↗</span></a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Deschide meniul" aria-expanded="false">☰</button>
-  </nav>
-</header>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<main>
-<section class="hero" id="home">
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <div class="kicker mono">Video editor, Videograf & content creator</div>
-      <h1><span class="line"><span>Ideile tale,</span></span><span class="line"><span class="italic">prind viață</span></span><span class="line"><span>în video.</span></span></h1>
-      <p class="hero-desc">Sunt Ionuț Tunea. Editez, filmez și creez conținut cu personalitate. Transform ideile în povești vizuale care captează atenția și rămân cu tine.</p>
-      <div class="actions"><a class="btn btn-primary" href="#portofoliu">Vezi portofoliul <span class="arrow">↗</span></a><a class="btn btn-ghost" href="#poveste">Află povestea mea</a></div>
-      <div class="social-row"><a href="#" data-placeholder="https://www.youtube.com/playlist?list=PLsrRee_OSuTS2cv78Hj0NAf73TYxy-VJT">YOUTUBE ↗</a><a href="#" data-placeholder="https://www.instagram.com/_tunea.ionut_/">INSTAGRAM ↗</a><a href="#" data-placeholder="https://www.tiktok.com/@tunea.ionut1">TIKTOK ↗</a></div>
-    </div>
-    <div class="hero-art reveal-right">
-      <div class="vertical-label">FRAME YOUR VISION — TUTU</div>
-      <div class="hero-photo">
-        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1100&q=85" alt="Echipament și spațiu de producție video" fetchpriority="high">
-        <div class="photo-caption">CREATIVE WORKSPACE<strong>Ideas into motion.</strong></div>
-      </div>
-      <div class="hero-stamp"><span>EDIT • CREATE • REPEAT •</span></div><div class="hero-number">01</div>
-    </div>
-  </div>
-  <a href="#poveste" class="scroll-cue"><i></i> Scroll to explore</a>
-</section>
-
-<div class="stats-strip container">
-  <div class="stat reveal"><strong><span class="counter" data-target="2" data-suffix="M+">0</span></strong><span>vizualizări pentru proiecte editate</span></div>
-  <div class="stat reveal delay-1"><strong><span class="counter" data-target="1" data-suffix="+">0</span></strong><span>an de experiență în editare</span></div>
-  <div class="stat reveal delay-2"><strong>∞</strong><span>idei de transformat în povești</span></div>
-</div>
-
-<section class="story section-pad" id="poveste">
-  <div class="container">
-    <div class="section-index reveal">02 / Despre mine</div>
-    <div class="story-grid">
-      <div class="story-visual reveal-left">
-        <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=900&q=85" alt="Cameră video într-un setup creativ" loading="lazy">
-        <div class="visual-text"><div class="big-quote">Nu doar<br>filmez.<br><span class="accent">Construiesc<br>povești.</span></div><small>Ionuț Tunea / Creator journey</small></div>
-      </div>
-      <div class="story-copy reveal-right">
-        <p class="eyebrow">Povestea mea</p>
-        <h2 style="font-size:clamp(2.4rem,5vw,4.5rem);line-height:.98;letter-spacing:-.08em;margin-bottom:28px">Totul începe cu<br>o <span class="accent">idee.</span></h2>
-        <p>Parcursul meu în lumea video a început din curiozitatea de a înțelege cum sunt create clipurile care te fac să te oprești din scroll. Am început să editez, să testez și să descopăr cum ritmul, sunetul și imaginea pot schimba complet o poveste.</p>
-        <p>Cu timpul, editarea a devenit mai mult decât o activitate: a devenit felul meu de a transforma ideile în conținut. Lucrez cu videoclipuri pentru social media, podcasturi, Shorts și proiecte care au nevoie de energie și identitate.</p>
-        <p>În paralel, vreau să cresc și ca <strong>creator de conținut și cameraman</strong> — să fiu în spatele camerei, în fața ei și implicat în întregul proces creativ.</p>
-        <blockquote>„Nu trebuie să ai totul perfect de la început. Trebuie să începi și să devii mai bun cu fiecare proiect.”</blockquote>
-        <div class="story-timeline">
-          <div class="timeline-item"><span class="year">START</span><div><h3>Curiozitate → primele editări</h3><p>Învățare prin practică, testare și multă atenție la detalii.</p></div></div>
-          <div class="timeline-item"><span class="year">NEXT</span><div><h3>De la editare la filmare</h3><p>Dezvoltarea unui workflow complet pentru conținut video.</p></div></div>
-          <div class="timeline-item"><span class="year">NOW</span><div><h3>Construiesc proiecte mai mari</h3><p>Portofoliu, podcasturi, conținut propriu și colaborări.</p></div></div>
-        </div>
-        <p class="mono" style="font-size:.65rem;color:#777;margin-top:16px">* Text de prezentare editabil — personalizează-l cu momentele reale din viața ta.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="services section-pad" id="servicii">
-  <div class="container">
-    <div class="section-heading reveal"><div><div class="section-index">03 / Ce fac</div><h2>Creativitate.<br><span class="accent">În mișcare.</span></h2></div><p>De la idee și filmare până la editarea finală, fiecare detaliu trebuie să aibă un scop.</p></div>
-    <div class="services-grid">
-      <article class="service reveal"><span class="num">01 / 04</span><div class="service-icon">▻</div><h3>Editare video</h3><p>Montaj, colorizare, sound design și ritm pentru YouTube, reclame și proiecte online.</p></article>
-      <article class="service reveal delay-1"><span class="num">02 / 04</span><div class="service-icon">◉</div><h3>Podcasturi</h3><p>Editare multicam, sincronizare audio, cadre dinamice și clipuri scurte din episod.</p></article>
-      <article class="service reveal delay-2"><span class="num">03 / 04</span><div class="service-icon">▣</div><h3>Shorts & Reels</h3><p>Conținut vertical cu hook puternic, subtitrări și montaj gândit pentru social media.</p></article>
-      <article class="service reveal delay-3"><span class="num">04 / 04</span><div class="service-icon">⌁</div><h3>Filmări & content</h3><p>Cadre pentru vloguri, podcasturi, branduri și proiecte care au nevoie de un look cinematic.</p></article>
-    </div>
-  </div>
-</section>
-
-<section class="section-pad" id="portofoliu">
-  <div class="container">
-    <div class="section-index reveal">04 / Proiecte selectate</div>
-    <div class="portfolio-top reveal"><div><h2 style="font-size:clamp(2.7rem,6vw,5.5rem);line-height:.98;letter-spacing:-.085em">Porto<span class="accent">foliu.</span></h2><p style="color:var(--muted);margin-top:15px;max-width:450px">Fiecare proiect are propriul ritm. Selectează o categorie și explorează exemplele.</p></div>
-      <div class="filters" role="group" aria-label="Filtrează proiectele"><button class="filter-btn active" data-filter="all">Toate</button><button class="filter-btn" data-filter="podcast">Podcast</button><button class="filter-btn" data-filter="shorts">Shorts</button><button class="filter-btn" data-filter="brand">Brand</button><button class="filter-btn" data-filter="filmare">Filmare</button></div>
-    </div>
-    <div class="portfolio-grid">
-      <article class="project-card reveal" data-category="podcast" data-title="Podcast — Interviu" data-description="Exemplu de proiect podcast: montaj multicam, ritm conversațional și post-producție. Înlocuiește cu un proiect real și linkul video.">
-        <div class="project-image"><img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=850&q=80" alt="Setup de podcast" loading="lazy"><span class="project-category">Podcast</span><button class="project-play" aria-label="Deschide proiectul">▶</button></div>
-        <div class="project-info"><h3>Podcast — Interviu</h3><p>Montaj multicam · Post-producție</p><div class="project-foot"><span>PROJECT 001</span><span>Vezi detalii ↗</span></div></div>
-      </article>
-      <article class="project-card reveal delay-1" data-category="filmare" data-title="Travel / Cinematic" data-description="Exemplu pentru vlog de călătorie și storytelling cinematic. Înlocuiește imaginea și detaliile cu materialele tale.">
-        <div class="project-image"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=850&q=80" alt="Peisaj montan cinematic" loading="lazy"><span class="project-category">Filmare</span><button class="project-play" aria-label="Deschide proiectul">▶</button></div>
-        <div class="project-info"><h3>Travel / Cinematic</h3><p>Storytelling · Color grading</p><div class="project-foot"><span>PROJECT 002</span><span>Vezi detalii ↗</span></div></div>
-      </article>
-      <article class="project-card reveal delay-2" data-category="shorts" data-title="Shorts & Reels" data-description="Exemplu de clip vertical, cu montaj dinamic, subtitrări și hook. Adaugă linkul către un Short publicat de tine.">
-        <div class="project-image"><img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=850&q=80" alt="Conținut pentru social media" loading="lazy"><span class="project-category">Shorts</span><button class="project-play" aria-label="Deschide proiectul">▶</button></div>
-        <div class="project-info"><h3>Shorts & Reels</h3><p>Montaj dinamic · Vertical video</p><div class="project-foot"><span>PROJECT 003</span><span>Vezi detalii ↗</span></div></div>
-      </article>
-      <article class="project-card reveal" data-category="brand" data-title="Video de brand" data-description="Exemplu de videoclip promoțional pentru un brand. Înlocuiește cu proiectul real, rolul tău și rezultatul obținut.">
-        <div class="project-image"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=850&q=80" alt="Automobil fotografiat pentru reclamă" loading="lazy"><span class="project-category">Brand</span><button class="project-play" aria-label="Deschide proiectul">▶</button></div>
-        <div class="project-info"><h3>Video de brand</h3><p>Concept · Editare · Colorizare</p><div class="project-foot"><span>PROJECT 004</span><span>Vezi detalii ↗</span></div></div>
-      </article>
-      <article class="project-card reveal delay-1" data-category="podcast" data-title="Podcast — Episod" data-description="Exemplu pentru un episod de podcast, cu selecție de momente importante și livrabile pentru platforme sociale.">
-        <div class="project-image"><img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=850&q=80" alt="Studio de înregistrare" loading="lazy"><span class="project-category">Podcast</span><button class="project-play" aria-label="Deschide proiectul">▶</button></div>
-        <div class="project-info"><h3>Podcast — Episod</h3><p>Montaj · Sunet · Social cutdowns</p><div class="project-foot"><span>PROJECT 005</span><span>Vezi detalii ↗</span></div></div>
-      </article>
-      <article class="project-card reveal delay-2" data-category="shorts" data-title="Creator content" data-description="Exemplu pentru conținut de creator: ritm alert, reacții, subtitrări și versiuni pentru platforme sociale.">
-        <div class="project-image"><img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=850&q=80" alt="Cameră și producție video" loading="lazy"><span class="project-category">Creator</span><button class="project-play" aria-label="Deschide proiectul">▶</button></div>
-        <div class="project-info"><h3>Creator content</h3><p>Social media · Editare</p><div class="project-foot"><span>PROJECT 006</span><span>Vezi detalii ↗</span></div></div>
-      </article>
-    </div>
-    <p class="mono" style="color:#777;font-size:.65rem;margin-top:18px">IMAGINILE SUNT DEMONSTRATIVE. Înlocuiește exemplele cu proiectele tale reale înainte de publicare.</p>
-  </div>
-</section>
-
-<section class="results section-pad" id="rezultate">
-  <div class="container">
-    <div class="section-heading reveal"><div><div class="section-index">05 / Impact</div><h2>Rezultatele<br>vorbesc.</h2></div><p>Creativitatea contează. La fel și consecvența, atenția la detalii și munca din spatele fiecărui cadru.</p></div>
-    <div class="results-grid">
-      <div class="result reveal"><strong><span class="counter" data-target="2" data-suffix="M+">0</span></strong><span>Vizualizări acumulate de videoclipuri editate</span></div>
-      <div class="result reveal delay-1"><strong><span class="counter" data-target="1" data-suffix="+">0</span></strong><span>An de experiență în editare</span></div>
-      <div class="result reveal delay-2"><strong>24/7</strong><span>Curiozitate de a învăța și experimenta</span></div>
-      <div class="result reveal delay-3"><strong>100%</strong><span>Implicare în fiecare proiect</span></div>
-    </div>
-    <p class="results-note">Cifrele de audiență sunt bazate pe informațiile furnizate; actualizează-le când ai statistici noi și verificabile.</p>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="contact-box reveal">
-      <div class="contact-inner">
-        <div><div class="eyebrow">06 / Următorul proiect</div><h2>Hai să facem<br><span class="accent">ceva memorabil.</span></h2><p>Ai un proiect, un podcast sau o idee de videoclip? Scrie-mi și vedem cum o putem transforma într-o poveste vizuală.</p><a class="btn btn-primary" href="mailto:ADRESA-TA@EXEMPLU.RO?subject=Colaborare%20video">Trimite un mesaj <span class="arrow">↗</span></a></div>
-        <div class="contact-links"><a href="mailto:tutumediastudio@gmail.com"><span>Email</span><span>↗</span></a><a href="#" data-placeholder=https://www.instagram.com/_tunea.ionut_/"><span>Instagram</span><span>↗</span></a><a href="#" data-placeholder="https://www.youtube.com/playlist?list=PLsrRee_OSuTS2cv78Hj0NAf73TYxy-VJT"><span>YouTube</span><span>↗</span></a><a href="#" data-placeholder="https://www.tiktok.com/@tunea.ionut1"><span>TikTok</span><span>↗</span></a></div>
-      </div>
-    </div>
-  </div>
-</section>
-</main>
-
-<footer><div class="container footer-inner"><span>© <span id="year"></span> <strong>Ionuț Tunea.</strong> Creat cu intenție.</span><span class="mono">BUILT FRAME BY FRAME.</span><a href="#home" class="back-top">Înapoi sus ↑</a></div></footer>
-
-<div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal-box"><button class="modal-close" id="modalClose" aria-label="Închide fereastra">×</button><div class="modal-media"><img id="modalImage" src="" alt=""></div><div class="modal-content"><div class="eyebrow">Project preview</div><h3 id="modalTitle">Titlu proiect</h3><p id="modalDescription"></p><p class="mono" style="font-size:.65rem;margin-top:16px;color:var(--yellow)">ADAUGĂ AICI LINKUL VIDEO REAL ÎN COD</p></div></div>
-</div>
-
-<script>
-(() => {
-  const $ = (s, root=document) => root.querySelector(s);
-  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
-  const curtain = $('#curtain');
-  const navLinks = $('#navLinks');
-  const menuToggle = $('#menuToggle');
-  let navigating = false;
-
-  // Cinematic wipe on internal navigation, with a fallback for reduced motion.
-  $$('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', event => {
-      const targetId = link.getAttribute('href');
-      if (!targetId || targetId === '#') return;
-const target = $(targetId);
-if (!target) return;
-      const target = $(targetId);
-      if (!target) return;
-      event.preventDefault();
-      navLinks.classList.remove('open');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      if (navigating || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        target.scrollIntoView({behavior:'smooth'});
-        history.replaceState(null, '', targetId);
-        return;
-      }
-      navigating = true;
-      curtain.classList.remove('go');
-      void curtain.offsetWidth;
-      curtain.classList.add('go');
-      setTimeout(() => {
-        target.scrollIntoView({behavior:'auto', block:'start'});
-        history.replaceState(null, '', targetId);
-      }, 350);
-      setTimeout(() => {
-        curtain.classList.remove('go');
-        navigating = false;
-      }, 900);
-    });
-  });
-
-  // Mobile navigation.
-  menuToggle.addEventListener('click', () => {
-    const open = navLinks.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', String(open));
-    menuToggle.textContent = open ? '×' : '☰';
-  });
-
-  // Scroll progress and active navigation item.
-  const progress = $('#progress');
-  const sections = $$('main section[id]');
-  function onScroll() {
-    const scrollable = document.documentElement.scrollHeight - innerHeight;
-    progress.style.width = (scrollable > 0 ? scrollY / scrollable * 100 : 0) + '%';
-  }
-  addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-
-  const navObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        $$('.nav-links a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
-      }
-    });
-  }, {rootMargin:'-35% 0px -55% 0px'});
-  sections.forEach(section => navObserver.observe(section));
-
-  // Reveal animations as content enters the viewport.
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {threshold:.12});
-  $$('.reveal,.reveal-left,.reveal-right').forEach(el => revealObserver.observe(el));
-
-  // Count-up metrics, animated only when visible.
-  const countObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      const target = Number(el.dataset.target || 0);
-      const suffix = el.dataset.suffix || '';
-      const start = performance.now();
-      const duration = 1250;
-      function tick(now) {
-        const t = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - t, 4);
-        el.textContent = Math.round(target * eased) + suffix;
-        if (t < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-      countObserver.unobserve(el);
-    });
-  }, {threshold:.6});
-  $$('.counter').forEach(el => countObserver.observe(el));
-
-  // Portfolio category filters.
-  $$('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
-    $$('.filter-btn').forEach(b => b.classList.toggle('active', b === btn));
-    const filter = btn.dataset.filter;
-    $$('.project-card').forEach((card, i) => {
-      const show = filter === 'all' || card.dataset.category === filter;
-      if (show) {
-        card.classList.remove('hidden');
-        card.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}], {duration:360,delay:i*35,easing:'cubic-bezier(.22,1,.36,1)'});
-      } else card.classList.add('hidden');
-    });
-  }));
-
-  // Project detail modal.
-  const modal = $('#projectModal');
-  const closeModal = () => { modal.classList.remove('open'); document.body.classList.remove('locked'); };
-  $$('.project-card').forEach(card => {
-    card.addEventListener('click', () => {
-      $('#modalTitle').textContent = card.dataset.title;
-      $('#modalDescription').textContent = card.dataset.description;
-      $('#modalImage').src = $('img', card).src;
-      $('#modalImage').alt = $('img', card).alt;
-      modal.classList.add('open');
-      document.body.classList.add('locked');
-      $('#modalClose').focus();
-    });
-  });
-  $('#modalClose').addEventListener('click', closeModal);
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-  addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  // Custom cursor for desktop pointer devices.
-  if (matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.body.classList.add('has-pointer');
-    const dot = $('#cursorDot'), ring = $('#cursorRing');
-    let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
-    addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; }, {passive:true});
-    function follow() {
-      rx += (mx-rx)*.16; ry += (my-ry)*.16;
-      ring.style.left=rx+'px'; ring.style.top=ry+'px';
-      requestAnimationFrame(follow);
+  <style>
+    :root {
+      --bg: #080808;
+      --panel: #101010;
+      --yellow: #eaff00;
+      --white: #f4f4f0;
+      --muted: #888880;
+      --line: rgba(255,255,255,.12);
+      --ease: cubic-bezier(.22,1,.36,1);
     }
-    follow();
-    $$('a,button,.project-card').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-  }
 
-  // Small parallax on the hero image, desktop only.
-  const art = $('.hero-art');
-  if (art && matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    art.addEventListener('mousemove', e => {
-      const r = art.getBoundingClientRect();
-      const x = (e.clientX-r.left)/r.width-.5;
-      const y = (e.clientY-r.top)/r.height-.5;
-      const photo = $('.hero-photo', art);
-      photo.style.transform = `translate(${x*8}px,${y*8}px)`;
-    });
-    art.addEventListener('mouseleave', () => { $('.hero-photo', art).style.transform=''; });
-  }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  $('#year').textContent = new Date().getFullYear();
-})();
-</script>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+      scrollbar-color: var(--yellow) var(--bg);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    body.locked { overflow: hidden; }
+
+    ::selection { background: var(--yellow); color: #080808; }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    #progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      width: 0%;
+      height: 3px;
+      background: var(--yellow);
+      z-index: 120;
+      box-shadow: 0 0 16px rgba(234,255,0,.4);
+    }
+
+    /* Cursor */
+
+    .cursor, .cursor-ring {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 200;
+      pointer-events: none;
+      border-radius: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+    .cursor {
+      width: 7px;
+      height: 7px;
+      background: var(--yellow);
+    }
+
+    .cursor-ring {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(234,255,0,.75);
+      transition: width .25s, height .25s, background .25s;
+    }
+
+    .cursor-ring.active {
+      width: 58px;
+      height: 58px;
+      background: rgba(234,255,0,.09);
+    }
+
+    /* Intro */
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: grid;
+      place-items: center;
+      background: var(--yellow);
+      color: #080808;
+      transition: transform .9s var(--ease), visibility .9s;
+    }
+
+    .intro.exit {
+      transform: translateY(-105%);
+      visibility: hidden;
+    }
+
+    .intro-inner {
+      width: min(900px, 88vw);
+    }
+
+    .intro-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 35px;
+    }
+
+    .intro-title {
+      font: 900 clamp(65px, 14vw, 170px)/.77 "Barlow Condensed", sans-serif;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+    }
+
+    .intro-title span { display: block; }
+
+    .intro-title .outline {
+      color: transparent;
+      -webkit-text-stroke: 2px #080808;
+    }
+
+    .intro-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 42px;
+      border-top: 1px solid rgba(0,0,0,.35);
+      padding-top: 20px;
+    }
+
+    .intro-bottom p {
+      font-size: 11px;
+      line-height: 1.7;
+      max-width: 220px;
+    }
+
+    .enter {
+      border: 1px solid #080808;
+      background: #080808;
+      color: var(--yellow);
+      padding: 16px 23px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 800;
+      font-size: 11px;
+      transition: background .25s, color .25s, transform .25s;
+    }
+
+    .enter:hover {
+      background: transparent;
+      color: #080808;
+      transform: translateY(-3px);
+    }
+
+    /* Header */
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 90;
+      border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s;
+    }
+
+    header.scrolled {
+      background: rgba(8,8,8,.88);
+      border-color: var(--line);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      height: 76px;
+      width: min(1400px, 90%);
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font: 900 27px/.9 "Barlow Condensed", sans-serif;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+
+    .brand span { color: var(--yellow); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(18px, 3vw, 40px);
+    }
+
+    .nav-links a {
+      font-size: 10px;
+      color: #c4c4bd;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--yellow); }
+
+    .nav-contact {
+      color: var(--yellow) !important;
+      border: 1px solid rgba(234,255,0,.55);
+      padding: 12px 16px;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      color: var(--yellow);
+      border: 1px solid var(--line);
+      width: 44px;
+      height: 44px;
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    /* General */
+
+    .container { width: min(1200px, 88%); margin-inline: auto; }
+
+    .section {
+      position: relative;
+      padding: 130px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--yellow);
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--yellow);
+    }
+
+    .section-title {
+      font: 800 clamp(55px, 9vw, 110px)/.85 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -.045em;
+    }
+
+    .section-title .accent { color: var(--yellow); }
+
+    .muted { color: var(--muted); }
+
+    /* Hero */
+
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 125px 0 75px;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      opacity: .12;
+      background-image:
+        linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
+      background-size: 65px 65px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: min(700px, 80vw);
+      aspect-ratio: 1;
+      right: -12%;
+      top: 10%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(234,255,0,.12), transparent 67%);
+      pointer-events: none;
+      transition: transform .2s linear;
+    }
+
+    .hero-content { position: relative; z-index: 2; width: 100%; }
+
+    .hero-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #b8b8b0;
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--yellow);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--yellow);
+      animation: blink 1.6s infinite;
+    }
+
+    @keyframes blink { 50% { opacity: .25; } }
+
+    .hero h1 {
+      font: 900 clamp(82px, 15.5vw, 205px)/.76 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -.065em;
+      position: relative;
+    }
+
+    .hero h1 span { display: block; }
+
+    .hero h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--white);
+      transition: color .35s, -webkit-text-stroke .35s;
+    }
+
+    .hero h1 .outline:hover {
+      color: var(--yellow);
+      -webkit-text-stroke-color: var(--yellow);
+    }
+
+    .hero-bottom {
+      margin-top: 42px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 28px;
+    }
+
+    .hero-description {
+      max-width: 380px;
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .hero-description strong { color: var(--white); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      min-height: 51px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 0 22px;
+      background: var(--yellow);
+      color: #080808;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      border: 1px solid var(--yellow);
+      transition: background .25s, color .25s, transform .25s;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--yellow);
+      transform: translateY(-3px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--line);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    .scroll-note {
+      position: absolute;
+      bottom: 27px;
+      left: 6%;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 9px;
+    }
+
+    .scroll-line {
+      height: 1px;
+      width: 40px;
+      background: var(--yellow);
+      animation: linePulse 1.8s infinite alternate;
+    }
+
+    @keyframes linePulse { to { width: 65px; } }
+
+    /* Marquee */
+
+    .marquee {
+      overflow: hidden;
+      background: var(--yellow);
+      color: #080808;
+      padding: 17px 0;
+      transform: rotate(-1deg) scale(1.02);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 27s linear infinite;
+    }
+
+    .marquee-track span {
+      font: 800 25px/1 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      padding-right: 25px;
+    }
+
+    .marquee-track span::after { content: "✳"; padding-left: 25px; }
+
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    /* Story */
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      margin-top: 70px;
+      align-items: start;
+    }
+
+    .story-sticky { position: sticky; top: 120px; }
+
+    .story-stamp {
+      width: min(100%, 400px);
+      aspect-ratio: 4/5;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 65% 30%, rgba(234,255,0,.17), transparent 40%),
+        linear-gradient(145deg, #1a1a1a, #090909 75%);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px;
+    }
+
+    .story-stamp::before {
+      content: "T";
+      position: absolute;
+      font: 900 420px/.8 "Barlow Condensed", sans-serif;
+      color: rgba(234,255,0,.07);
+      right: -12px;
+      bottom: 35px;
+    }
+
+    .stamp-top, .stamp-bottom { position: relative; z-index: 1; }
+
+    .stamp-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: #aaa;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .stamp-name {
+      position: relative;
+      z-index: 1;
+      font: 900 clamp(45px, 7vw, 83px)/.8 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+    }
+
+    .stamp-name span { color: var(--yellow); display: block; }
+
+    .stamp-bottom {
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #aaa;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .story-copy { padding-top: 8px; }
+
+    .story-copy h3 {
+      font: 800 clamp(34px, 4vw, 49px)/1 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
+
+    .story-copy p {
+      color: #a5a59d;
+      font-size: 14px;
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+
+    .story-copy p strong { color: var(--white); }
+
+    .chapter {
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+      margin-top: 26px;
+    }
+
+    .chapter-number {
+      color: var(--yellow);
+      font-size: 10px;
+      letter-spacing: .15em;
+      margin-bottom: 10px;
+    }
+
+    .chapter h4 {
+      font: 700 25px "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .chapter p { margin-bottom: 0; }
+
+    /* Interactive statement */
+
+    .manifesto {
+      background: var(--yellow);
+      color: #080808;
+      padding: 100px 0;
+      overflow: hidden;
+    }
+
+    .manifesto .eyebrow { color: #080808; }
+    .manifesto .eyebrow::before { background: #080808; }
+
+    .manifesto-text {
+      font: 900 clamp(48px, 8.6vw, 108px)/.9 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+      max-width: 1100px;
+    }
+
+    .manifesto-text span {
+      color: transparent;
+      -webkit-text-stroke: 1.5px #080808;
+      transition: color .25s;
+    }
+
+    .manifesto-text span:hover { color: #080808; }
+
+    .manifesto-foot {
+      margin-top: 35px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    /* Work */
+
+    .work-intro {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .work-intro > p {
+      max-width: 290px;
+      color: #999;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .work-grid {
+      margin-top: 65px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .project {
+      position: relative;
+      display: block;
+      min-width: 0;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+
+    .project:hover {
+      border-color: rgba(234,255,0,.7);
+      transform: translateY(-5px);
+    }
+
+    .project-visual {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(234,255,0,.11), transparent 55%),
+        linear-gradient(135deg, #191919, #080808);
+      display: grid;
+      place-items: center;
+    }
+
+    .project-visual::before,
+    .project-visual::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(234,255,0,.2);
+      border-radius: 50%;
+      width: 55%;
+      aspect-ratio: 1;
+      transition: transform .8s var(--ease);
+    }
+
+    .project-visual::after {
+      width: 75%;
+      border-color: rgba(255,255,255,.09);
+    }
+
+    .project:hover .project-visual::before { transform: scale(1.4) rotate(25deg); }
+    .project:hover .project-visual::after { transform: scale(.8) rotate(-25deg); }
+
+    .project-symbol {
+      position: relative;
+      z-index: 1;
+      font: 900 clamp(60px, 11vw, 135px)/1 "Barlow Condensed", sans-serif;
+      color: var(--yellow);
+      letter-spacing: -.06em;
+    }
+
+    .project-play {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #080808;
+      background: var(--yellow);
+      font-size: 13px;
+      transition: transform .3s;
+    }
+
+    .project:hover .project-play { transform: rotate(-45deg) scale(1.1); }
+
+    .project-info {
+      padding: 21px 22px 23px;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: flex-end;
+    }
+
+    .project-info h3 {
+      font: 700 clamp(23px, 3vw, 34px)/1 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+    }
+
+    .project-info p {
+      color: #999;
+      font-size: 10px;
+      margin-top: 9px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .project-arrow { color: var(--yellow); font-size: 22px; }
+
+    .playlist {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: #0d0d0d;
+      align-items: center;
+    }
+
+    .playlist h3 {
+      font: 800 35px/1 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .playlist p {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .playlist iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: 0;
+      background: #151515;
+    }
+
+    /* Future */
+
+    .future-panel {
+      margin-top: 60px;
+      padding: clamp(28px, 6vw, 65px);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(ellipse at 100% 0%, rgba(234,255,0,.08), transparent 50%),
+        #0d0d0d;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .future-panel h3 {
+      font: 900 clamp(52px, 10vw, 120px)/.82 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+      max-width: 900px;
+    }
+
+    .future-panel h3 span { color: var(--yellow); }
+
+    .future-bottom {
+      margin-top: 42px;
+      padding-top: 25px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 30px;
+    }
+
+    .future-bottom p {
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.9;
+      max-width: 390px;
+    }
+
+    /* Contact */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr .8fr;
+      gap: 60px;
+      margin-top: 60px;
+    }
+
+    .contact-heading {
+      font: 900 clamp(65px, 11vw, 140px)/.78 "Barlow Condensed", sans-serif;
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+
+    .contact-heading span { color: var(--yellow); display: block; }
+
+    .contact-description {
+      color: #999;
+      font-size: 14px;
+      line-height: 1.9;
+      margin-top: 30px;
+      max-width: 400px;
+    }
+
+    .contact-links { border-top: 1px solid var(--line); }
+
+    .contact-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+      transition: padding .3s, color .3s;
+    }
+
+    .contact-link:hover {
+      padding-inline: 10px;
+      color: var(--yellow);
+    }
+
+    .contact-link span:first-child {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .contact-link span:last-child { font-size: 20px; }
+
+    footer {
+      padding: 25px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      color: #777;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .footer-inner strong { color: var(--yellow); }
+
+    .back-top {
+      color: var(--white);
+      border: 1px solid var(--line);
+      padding: 12px 15px;
+      transition: color .2s, border-color .2s;
+    }
+
+    .back-top:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    /* Reveal and modal */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity .8s var(--ease), transform .8s var(--ease);
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .video-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      background: rgba(0,0,0,.94);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s, visibility .3s;
+    }
+
+    .video-modal.open { opacity: 1; visibility: visible; }
+
+    .modal-content { width: min(950px, 100%); position: relative; }
+
+    .modal-content iframe {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: 1px solid var(--line);
+      background: #111;
+    }
+
+    .modal-close {
+      display: block;
+      margin-left: auto;
+      margin-bottom: 15px;
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--white);
+      padding: 12px 18px;
+      cursor: pointer;
+    }
+
+    .modal-close:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    .secret {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      background: var(--yellow);
+      color: #080808;
+      display: grid;
+      place-items: center;
+      padding: 25px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s, visibility .25s;
+    }
+
+    .secret.open { opacity: 1; visibility: visible; }
+
+    .secret-inner { text-align: center; }
+
+    .secret h2 {
+      font: 900 clamp(65px, 14vw, 160px)/.8 "Barlow Condensed", sans-serif;
+      text-transform: uppercase;
+    }
+
+    .secret p {
+      margin-top: 25px;
+      font-size: 12px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .secret button {
+      margin-top: 30px;
+      border: 1px solid #080808;
+      background: #080808;
+      color: var(--yellow);
+      padding: 14px 22px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 760px) {
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+
+      .nav { height: 68px; width: 90%; }
+      .brand { font-size: 25px; }
+      .menu-btn { display: block; }
+
+      .nav-links {
+        position: fixed;
+        inset: 68px 0 auto 0;
+        background: rgba(8,8,8,.98);
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0 5%;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height .4s var(--ease), opacity .3s, padding .3s;
+      }
+
+      .nav-links.open {
+        max-height: 390px;
+        opacity: 1;
+        padding-top: 12px;
+        padding-bottom: 20px;
+      }
+
+      .nav-links a {
+        padding: 17px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-links .nav-contact {
+        border: 0;
+        padding: 17px 0;
+      }
+
+      .hero { min-height: 92svh; padding-top: 110px; }
+      .hero h1 { font-size: clamp(76px, 18vw, 140px); }
+      .hero-bottom { flex-direction: column; align-items: flex-start; margin-top: 32px; }
+      .hero-description { max-width: 440px; }
+      .scroll-note { display: none; }
+
+      .section { padding: 85px 0; }
+      .story-grid { grid-template-columns: 1fr; gap: 38px; margin-top: 45px; }
+      .story-sticky { position: relative; top: auto; }
+      .story-stamp { max-width: 100%; aspect-ratio: 5/4; }
+      .story-stamp::before { font-size: 320px; }
+      .stamp-name { font-size: clamp(55px, 14vw, 85px); }
+
+      .work-intro { flex-direction: column; align-items: flex-start; }
+      .work-grid { gap: 12px; margin-top: 40px; }
+      .project-info { padding: 15px; }
+      .project-info p { font-size: 9px; }
+      .project-info h3 { font-size: 25px; }
+
+      .playlist { grid-template-columns: 1fr; padding: 20px; }
+      .future-bottom { flex-direction: column; align-items: flex-start; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .manifesto { padding: 75px 0; }
+    }
+
+    @media (max-width: 430px) {
+      .container { width: 90%; }
+      .hero h1 { font-size: 19vw; }
+      .hero-kicker { font-size: 9px; }
+      .hero-actions { width: 100%; }
+      .hero-actions .btn { flex: 1; padding-inline: 12px; gap: 8px; }
+      .work-grid { grid-template-columns: 1fr; }
+      .project-visual { aspect-ratio: 16/9; }
+      .project-symbol { font-size: 100px; }
+      .manifesto-foot { align-items: flex-start; flex-direction: column; }
+      .footer-inner { flex-wrap: wrap; }
+      .intro-title { font-size: 18vw; }
+      .intro-bottom { align-items: flex-start; flex-direction: column; }
+      .enter { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="locked">
+  <div id="progress"></div>
+  <div class="noise"></div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- CINEMATIC INTRO -->
+  <div class="intro" id="intro">
+    <div class="intro-inner">
+      <div class="intro-top">
+        <span>Independent creative portfolio</span>
+        <span>RO / 001</span>
+      </div>
+
+      <div class="intro-title">
+        <span>Ionuț</span>
+        <span class="outline">Tunea.</span>
+      </div>
+
+      <div class="intro-bottom">
+        <p>Nu doar să privești.<br>Ci să simți fiecare cadru.</p>
+        <button class="enter" id="enterSite">Intră în universul meu ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header id="header">
+    <nav class="nav">
+      <a href="#home" class="brand magnetic" aria-label="Ionuț Tunea, acasă">TUTU<span>®</span></a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Deschide meniul" aria-expanded="false">☰</button>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#home">Acasă</a>
+        <a href="#story">Povestea mea</a>
+        <a href="#work">Portofoliu</a>
+        <a href="#future">Viziune</a>
+        <a href="#contact" class="nav-contact">Hai să vorbim ↗</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-grid"></div>
+      <div class="hero-glow" id="heroGlow"></div>
+
+      <div class="container hero-content">
+        <div class="hero-kicker reveal">
+          <span class="live-dot"></span>
+          <span>Videograf · Creator · În continuă evoluție</span>
+        </div>
+
+        <h1 class="reveal">
+          <span>IONUȚ</span>
+          <span class="outline" data-hover="TUNEA">TUNEA.</span>
+        </h1>
+
+        <div class="hero-bottom reveal">
+          <p class="hero-description">
+            Sunt <strong>Ionuț Tunea</strong>, cunoscut și ca Tutu.
+            Construiesc povești prin imagine, atmosferă și momente reale.
+            Ăsta este universul meu. Bine ai venit.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#work" class="btn magnetic">Vezi proiectele <span>↗</span></a>
+            <a href="#story" class="btn btn-secondary magnetic">Cine sunt? <span>↓</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-note">
+        <span class="scroll-line"></span>
+        <span>Continuă să explorezi</span>
+      </div>
+    </section>
+
+    <!-- MOVING STRIP -->
+    <div class="marquee" aria-label="Create. Capture. Repeat.">
+      <div class="marquee-track">
+        <span>CREATE</span><span>CAPTURE</span><span>EXPERIMENT</span><span>REPEAT</span>
+        <span>CREATE</span><span>CAPTURE</span><span>EXPERIMENT</span><span>REPEAT</span>
+      </div>
+    </div>
+
+    <!-- STORY -->
+    <section class="section" id="story">
+      <div class="container">
+        <div class="eyebrow reveal">01 / Povestea mea</div>
+        <h2 class="section-title reveal">Mai mult decât<br><span class="accent">un cadru.</span></h2>
+
+        <div class="story-grid">
+          <div class="story-sticky reveal">
+            <div class="story-stamp">
+              <div class="stamp-top">
+                <span>Personal archive</span>
+                <span>Since day one</span>
+              </div>
+
+              <div class="stamp-name">
+                Ionuț
+                <span>Tunea.</span>
+              </div>
+
+              <div class="stamp-bottom">
+                <span>Curiozitate fără limite</span>
+                <span>Reșița · RO</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="story-copy">
+            <h3>Nu există o poveste perfectă. Există una care merită spusă.</h3>
+
+            <p>
+              Sunt Ionuț Tunea, iar <strong>Tutu</strong> este numele sub care
+              mă cunosc mulți. Îmi place să creez, să experimentez și să găsesc
+              unghiul din care o idee simplă poate deveni ceva memorabil.
+            </p>
+
+            <p>
+              Pentru mine, videografia înseamnă mai mult decât să apeși REC.
+              Înseamnă să observi detaliile, să înțelegi atmosfera și să surprinzi
+              momentele care spun ceva fără să aibă nevoie de prea multe cuvinte.
+            </p>
+
+            <p>
+              Îmi place să încerc lucruri noi, să învăț din fiecare proiect și să
+              transform ideile în experiențe vizuale. Nu vreau doar să reproduc
+              ce există deja. Vreau să-mi găsesc propriul stil.
+            </p>
+
+            <div class="chapter">
+              <div class="chapter-number">CHAPTER 01 — CREATIVITATE</div>
+              <h4>Totul începe cu o idee.</h4>
+              <p>
+                Uneori, cel mai interesant proiect pornește de la o întrebare,
+                o conversație sau un moment pe care altcineva l-ar trece cu vederea.
+              </p>
+            </div>
+
+            <div class="chapter">
+              <div class="chapter-number">CHAPTER 02 — EXPERIENȚĂ</div>
+              <h4>Înveți făcând.</h4>
+              <p>
+                Fiecare filmare este o ocazie să testez ceva, să-mi îmbunătățesc
+                tehnica și să descopăr ce funcționează pentru mine.
+              </p>
+            </div>
+
+            <div class="chapter">
+              <div class="chapter-number">CHAPTER 03 — DIRECȚIE</div>
+              <h4>Încă scriu povestea.</h4>
+              <p>
+                Nu consider că am ajuns la final. Sunt aici ca să cresc, să creez
+                proiecte mai ambițioase și să văd cât de departe pot duce ideile mele.
+              </p>
+            </div>
+
+            <a class="btn magnetic" href="#contact">Fii parte din poveste <span>↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANIFESTO -->
+    <section class="manifesto">
+      <div class="container">
+        <div class="eyebrow reveal">02 / Felul meu de a vedea lucrurile</div>
+
+        <div class="manifesto-text reveal">
+          Nu filmez doar ceea ce <span>vezi.</span><br>
+          Caut ceea ce <span>simți.</span>
+        </div>
+
+        <div class="manifesto-foot reveal">
+          <span>Fiecare cadru are o intenție.</span>
+          <span>— Tutu®</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="section" id="work">
+      <div class="container">
+        <div class="eyebrow reveal">03 / Selecție de proiecte</div>
+
+        <div class="work-intro reveal">
+          <h2 class="section-title">Made to<br><span class="accent">be seen.</span></h2>
+          <p>
+            Proiecte video, idei și experimente. Apasă pe un proiect
+            pentru a-l deschide și a-l urmări.
+          </p>
+        </div>
+
+        <div class="work-grid">
+          <a class="project reveal video-open"
+             href="https://youtu.be/gWnSG0IO6qI?si=Kc9QkXQn-8Nuj1LP"
+             data-video="gWnSG0IO6qI"
+             aria-label="Deschide videoclipul YouTube">
+            <div class="project-visual">
+              <span class="project-symbol">01.</span>
+              <span class="project-play">↗</span>
+            </div>
+            <div class="project-info">
+              <div>
+                <h3>Video Showcase</h3>
+                <p>Videografie · Proiect video</p>
+              </div>
+              <span class="project-arrow">↗</span>
+            </div>
+          </a>
+
+          <a class="project reveal"
+             href="https://www.youtube.com/playlist?list=PLsrRee_OSuTS2cv78Hj0NAf73TYxy-VJT"
+             target="_blank" rel="noopener noreferrer">
+            <div class="project-visual">
+              <span class="project-symbol">02.</span>
+              <span class="project-play">↗</span>
+            </div>
+            <div class="project-info">
+              <div>
+                <h3>Podcast Universe</h3>
+                <p>Conversații · YouTube playlist</p>
+              </div>
+              <span class="project-arrow">↗</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="playlist reveal">
+          <div>
+            <div class="eyebrow">Watch / Listen / Explore</div>
+            <h3>Intră în universul video.</h3>
+            <p>
+              Explorează playlistul meu YouTube direct aici.
+              Pentru întreaga experiență, poți deschide playlistul pe YouTube.
+            </p>
+            <a class="btn magnetic"
+               href="https://www.youtube.com/playlist?list=PLsrRee_OSuTS2cv78Hj0NAf73TYxy-VJT"
+               target="_blank" rel="noopener noreferrer">
+              Deschide playlistul <span>↗</span>
+            </a>
+          </div>
+
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/videoseries?list=PLsrRee_OSuTS2cv78Hj0NAf73TYxy-VJT"
+            title="Playlist YouTube — Tunea Ionut"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- FUTURE -->
+    <section class="section" id="future">
+      <div class="container">
+        <div class="eyebrow reveal">04 / Ce urmează</div>
+        <h2 class="section-title reveal">Not the<br><span class="accent">final form.</span></h2>
+
+        <div class="future-panel reveal">
+          <h3>Vreau să construiesc ceva ce <span>rămâne.</span></h3>
+
+          <div class="future-bottom">
+            <p>
+              Mai multe proiecte. Idei mai îndrăznețe. Oameni interesanți.
+              Experiențe pe care să le transform în povești vizuale.
+              Nu e un punct final, ci următorul capitol.
+            </p>
+            <a href="#contact" class="btn magnetic">Hai să creăm ceva <span>↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="eyebrow reveal">05 / Contact</div>
+
+        <div class="contact-grid">
+          <div class="reveal">
+            <h2 class="contact-heading">Let's<br><span>make it.</span></h2>
+            <p class="contact-description">
+              Ai un proiect, o idee de videoclip sau vrei să colaborăm?
+              Scrie-mi. Sunt deschis să cunosc oameni noi și să descopăr
+              următoarea idee interesantă.
+            </p>
+            <a class="btn magnetic" style="margin-top:25px"
+               href="mailto:tutumediostudio@gmail.com?subject=Propunere%20de%20colaborare">
+              Trimite-mi un email <span>↗</span>
+            </a>
+          </div>
+
+          <div class="contact-links reveal">
+            <a class="contact-link" href="mailto:tutumediostudio@gmail.com">
+              <span>Email <br><small class="muted">tutumediostudio@gmail.com</small></span>
+              <span>↗</span>
+            </a>
+
+            <a class="contact-link"
+               href="https://www.instagram.com/_tunea.ionut_/"
+               target="_blank" rel="noopener noreferrer">
+              <span>Instagram <br><small class="muted">@_tunea.ionut_</small></span>
+              <span>↗</span>
+            </a>
+
+            <a class="contact-link"
+               href="https://www.tiktok.com/@tunea.ionut1"
+               target="_blank" rel="noopener noreferrer">
+              <span>TikTok <br><small class="muted">@tunea.ionut1</small></span>
+              <span>↗</span>
+            </a>
+
+            <a class="contact-link"
+               href="https://www.youtube.com/playlist?list=PLsrRee_OSuTS2cv78Hj0NAf73TYxy-VJT"
+               target="_blank" rel="noopener noreferrer">
+              <span>YouTube <br><small class="muted">Tunea Ionut</small></span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> <strong>Ionuț Tunea®</strong></span>
+      <span>Built with intent. Made to evolve.</span>
+      <a class="back-top" href="#home">Înapoi sus ↑</a>
+    </div>
+  </footer>
+
+  <!-- VIDEO MODAL -->
+  <div class="video-modal" id="videoModal" role="dialog" aria-modal="true" aria-label="Player video">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">Închide ✕</button>
+      <iframe id="videoFrame" src="about:blank" title="Videoclip YouTube"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- SECRET EASTER EGG: TYPE TUTU -->
+  <div class="secret" id="secret" role="dialog" aria-modal="true" aria-label="Easter egg secret">
+    <div class="secret-inner">
+      <h2>YOU FOUND<br>THE SECRET.</h2>
+      <p>Curiozitatea te-a adus aici. Acum continuă să creezi.</p>
+      <button id="secretClose">Înapoi în univers ↗</button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+      const intro = $("#intro");
+      const enterButton = $("#enterSite");
+      const header = $("#header");
+      const progress = $("#progress");
+      const menuBtn = $("#menuBtn");
+      const navLinks = $("#navLinks");
+      const modal = $("#videoModal");
+      const videoFrame = $("#videoFrame");
+      const modalClose = $("#modalClose");
+      const secret = $("#secret");
+      const secretClose = $("#secretClose");
+
+      $("#year").textContent = new Date().getFullYear();
+
+      // Intro animation
+      function enterSite() {
+        intro.classList.add("exit");
+        document.body.classList.remove("locked");
+
+        // Avoid keeping the intro in the accessibility tree after transition.
+        window.setTimeout(() => {
+          intro.style.display = "none";
+        }, 1000);
+      }
+
+      enterButton.addEventListener("click", enterSite);
+
+      // Let keyboard users enter with Enter or Space.
+      enterButton.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") enterSite();
+      });
+
+      // Scroll progress + header state
+      let scrollTicking = false;
+
+      function updateScroll() {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+
+        progress.style.width = `${Math.min(100, Math.max(0, ratio * 100))}%`;
+        header.classList.toggle("scrolled", window.scrollY > 25);
+        scrollTicking = false;
+      }
+
+      window.addEventListener("scroll", () => {
+        if (!scrollTicking) {
+          window.requestAnimationFrame(updateScroll);
+          scrollTicking = true;
+        }
+      }, { passive: true });
+
+      updateScroll();
+
+      // Mobile navigation
+      function closeMenu() {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.textContent = "☰";
+      }
+
+      menuBtn.addEventListener("click", () => {
+        const isOpen = navLinks.classList.toggle("open");
+        menuBtn.setAttribute("aria-expanded", String(isOpen));
+        menuBtn.textContent = isOpen ? "✕" : "☰";
+      });
+
+      $$("#navLinks a").forEach(link => {
+        link.addEventListener("click", closeMenu);
+      });
+
+      document.addEventListener("click", (event) => {
+        if (!navLinks.contains(event.target) && !menuBtn.contains(event.target)) {
+          closeMenu();
+        }
+      });
+
+      // Scroll reveal, with reduced-motion support
+      const revealItems = $$(".reveal");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if ("IntersectionObserver" in window && !reduceMotion) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        revealItems.forEach(item => revealObserver.observe(item));
+      } else {
+        revealItems.forEach(item => item.classList.add("visible"));
+      }
+
+      // Cursor + hero glow + magnetic buttons on pointer devices only
+      const finePointer = window.matchMedia("(pointer: fine)").matches;
+      const cursor = $("#cursor");
+      const cursorRing = $("#cursorRing");
+      const heroGlow = $("#heroGlow");
+
+      if (finePointer && !reduceMotion) {
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let ringX = mouseX;
+        let ringY = mouseY;
+
+        document.addEventListener("mousemove", event => {
+          mouseX = event.clientX;
+          mouseY = event.clientY;
+
+          cursor.style.left = `${mouseX}px`;
+          cursor.style.top = `${mouseY}px`;
+
+          if (heroGlow) {
+            heroGlow.style.transform =
+              `translate(${(mouseX / window.innerWidth - .5) * 35}px, ${(mouseY / window.innerHeight - .5) * 35}px)`;
+          }
+        }, { passive: true });
+
+        function animateRing() {
+          ringX += (mouseX - ringX) * .17;
+          ringY += (mouseY - ringY) * .17;
+          cursorRing.style.left = `${ringX}px`;
+          cursorRing.style.top = `${ringY}px`;
+          requestAnimationFrame(animateRing);
+        }
+
+        animateRing();
+
+        $$("a, button, .project").forEach(el => {
+          el.addEventListener("mouseenter", () => cursorRing.classList.add("active"));
+          el.addEventListener("mouseleave", () => cursorRing.classList.remove("active"));
+        });
+
+        $$(".magnetic").forEach(el => {
+          el.addEventListener("mousemove", event => {
+            const rect = el.getBoundingClientRect();
+            const dx = event.clientX - (rect.left + rect.width / 2);
+            const dy = event.clientY - (rect.top + rect.height / 2);
+            el.style.transform = `translate(${dx * .07}px, ${dy * .12}px)`;
+          });
+
+          el.addEventListener("mouseleave", () => {
+            el.style.transform = "";
+          });
+        });
+      }
+
+      // Video modal. Video starts only after a click.
+      function closeVideo() {
+        modal.classList.remove("open");
+        videoFrame.src = "about:blank";
+        document.body.classList.remove("locked");
+      }
+
+      $$(".video-open").forEach(link => {
+        link.addEventListener("click", event => {
+          event.preventDefault();
+
+          const videoId = link.dataset.video;
+          if (!videoId) {
+            window.open(link.href, "_blank", "noopener,noreferrer");
+            return;
+          }
+
+          videoFrame.src =
+            `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0`;
+
+          modal.classList.add("open");
+          document.body.classList.add("locked");
+          modalClose.focus();
+        });
+      });
+
+      modalClose.addEventListener("click", closeVideo);
+
+      modal.addEventListener("click", event => {
+        if (event.target === modal) closeVideo();
+      });
+
+      // Hidden Easter egg: type TUTU
+      let typed = "";
+      const secretCode = "TUTU";
+
+      document.addEventListener("keydown", event => {
+        const tag = document.activeElement?.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || event.ctrlKey || event.altKey || event.metaKey) {
+          return;
+        }
+
+        if (event.key === "Escape") {
+          closeVideo();
+          closeMenu();
+          secret.classList.remove("open");
+          return;
+        }
+
+        if (modal.classList.contains("open") || secret.classList.contains("open")) return;
+
+        if (event.key.length === 1 && /^[a-z]$/i.test(event.key)) {
+          typed = (typed + event.key.toUpperCase()).slice(-secretCode.length);
+
+          if (typed === secretCode) {
+            secret.classList.add("open");
+            typed = "";
+            secretClose.focus();
+          }
+        }
+      });
+
+      secretClose.addEventListener("click", () => {
+        secret.classList.remove("open");
+      });
+
+      secret.addEventListener("click", event => {
+        if (event.target === secret) secret.classList.remove("open");
+      });
+
+      // Keep focus inside modal while it's open (basic keyboard accessibility)
+      document.addEventListener("keydown", event => {
+        if (event.key !== "Tab") return;
+
+        const activeModal = modal.classList.contains("open")
+          ? modal
+          : secret.classList.contains("open") ? secret : null;
+
+        if (!activeModal) return;
+
+        const focusable = $$("button, a[href], iframe", activeModal)
+          .filter(el => !el.hasAttribute("disabled"));
+
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
